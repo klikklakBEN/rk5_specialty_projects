@@ -44,6 +44,8 @@ t_r = t(r_points)
 E_r = E(r_points)
 alpha_r = alpha(r_points)
 
+# Output depends on the directory the interpreter is invoked from.
+# Expected to ve invoked from .../rotor_analysys/output
 
 # Graphical output of E and t
 fig_e, ax_e = plt.subplots()
