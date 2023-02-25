@@ -50,13 +50,13 @@ fig_e, ax_e = plt.subplots()
 ax_e.plot(r_points,E_r)
 ax_e.set(xlabel='r, mm',ylabel='E, MPa')
 ax_e.grid()
-plt.savefig('../output/E.svg')
+plt.savefig('E.svg')
 
 fig_t, ax_t = plt.subplots()
 ax_t.plot(r_points,t_r)
 ax_t.set(xlabel='r, mm',ylabel='t, deg. C')
 ax_t.grid()
-plt.savefig('../output/t.svg')
+plt.savefig('t.svg')
 
 
 
@@ -125,7 +125,7 @@ fig_s1, ax_s1 = plt.subplots()
 ax_s1.stem(r_steps,sigma_1,linefmt='k-',markerfmt='k-')
 ax_s1.set(xlabel='r, mm',ylabel='sigma_1, MPa',title='sigma_1')
 ax_s1.grid()
-plt.savefig('../output/sigma_1_w.svg')
+plt.savefig('sigma_1_w.svg')
 
 
 
@@ -134,7 +134,7 @@ fig_s2, ax_s2 = plt.subplots()
 ax_s2.stem(r_steps,sigma_2,linefmt='k-',markerfmt='k-')
 ax_s2.set(xlabel='r, mm',ylabel='sigma_2, MPa',title='sigma_2')
 ax_s2.grid()
-plt.savefig('../output//sigma_2_w.svg')
+plt.savefig('sigma_2_w.svg')
 
 
 
@@ -143,5 +143,5 @@ fig_su, ax_su = plt.subplots()
 ax_su.stem(r_steps,u,linefmt='k-',markerfmt='k-')
 ax_su.set(xlabel='r, mm',ylabel='u, mm',title='Displacement')
 ax_su.grid()
-plt.savefig('../output/u_w.svg')
+plt.savefig('w.svg')
 
