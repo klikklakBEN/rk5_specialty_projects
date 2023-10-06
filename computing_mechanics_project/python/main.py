@@ -7,7 +7,7 @@ def checkEqNodes(node1, node2):
     equalX = (node1[1] == node2[1])
     equalY = (node1[2] == node2[2])
 
-    return (equalX & equalY)
+    return (equalX & equalY);
 
 def createNodes(elemCoord):
     
@@ -20,10 +20,10 @@ def createNodes(elemCoord):
     
     i = 1
     index_i = 1
-    while (i<count)
+    while (i<count):
         
         i +=1
-        if checkEqNodes(elemCoord[i], elemCoord[i-1]:
+        if checkEqNodes(elemCoord[i], elemCoord[i-1]):
             continue
         nodeTable[i][0] = i
         nodeTable[i][1] = elemCoord[i][0]
@@ -31,7 +31,7 @@ def createNodes(elemCoord):
         
         index_i += 1
 
-    return nodeTable, index_i
+    return nodeTable, index_i;
 
 
 def createElem(nodes, nodeNum, matProp):
@@ -46,11 +46,49 @@ def createElem(nodes, nodeNum, matProp):
     elemE   = matProp[0]
     elemPR  = matProp[1]
 
-    return elemNodes, elemE, elemPR
+    return elemNodes, elemE, elemPR;
+
+# defining form functions
+
+def N1(xi, eta):
+
+    return 1./4 * (1 - xi) * (1 - eta);
+
+def N2(xi, eta):
+
+    return 1./4 * (1 + xi) * (1 - eta);
+
+def N3(xi, eta):
+
+    return 1./4 * (1 + xi) * (1 + eta);
+
+def N4(xi, eta):
+
+    return 1./4 * (1 - xi) * (1 + eta);
+
+# define form function matrix
+
+def NMatrix(xi, eta):
+
+    n_mtx = np.zeros((2,8))
+    
+    n_mtx[0][0] = N1(xi, eta)
+    n_mtx[1][1] = N1(xi, eta)
+ 
+    n_mtx[0][2] = N2(xi, eta)
+    n_mtx[1][3] = N2(xi, eta)
+   
+    n_mtx[0][4] = N3(xi, eta)
+    n_mtx[1][5] = N3(xi, eta)
+
+    n_mtx[0][6] = N4(xi, eta)
+    n_mtx[1][7] = N4(xi, eta)
+
+    return n_mtx;
 
 def elemNormCoord(elem):
 
-    return
+    return;
 
 
 #tableOfNodes = txt.to.list.or.smth("ElemCoords")
