@@ -24,7 +24,7 @@ def createNodes(elemCoord):
         
         i +=1
         if checkEqNodes(elemCoord[i], elemCoord[i-1]:
-                        continue
+            continue
         nodeTable[i][0] = i
         nodeTable[i][1] = elemCoord[i][0]
         nodeTable[i][2] = elemCoord[i][1]
