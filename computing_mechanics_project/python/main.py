@@ -52,3 +52,8 @@ def elemNormCoord(elem):
 
     return
 
+
+#tableOfNodes = txt.to.list.or.smth("ElemCoords")
+
+# make the damn program as easy as possible, do not make rocket science off of it!
+# if the file returns some data, adjust the code to be able to read it! 
