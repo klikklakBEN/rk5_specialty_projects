@@ -2,10 +2,10 @@ import numpy as np
 
 #assuming there's a fucntion harvesting the node information from input txt/xls/spreadsheet file
 
-def checkEqNodes(elemCoord1, elemCoord2):
+def checkEqNodes(node1, node2):
 
-    equalX = (elemCoord1[0] == elemCoord2[0])
-    equalY = (elemCoord1[1] == elemCoord2[1])
+    equalX = (node1[1] == node2[1])
+    equalY = (node1[2] == node2[2])
 
     return (equalX & equalY)
 
