@@ -114,8 +114,38 @@ def dNdetaMatrix(xi, eta):
 
 
 # Jacobian matrix
-def J(elemCoords, xi, eta):
+def J(elem, xi, eta):
 
-    return
+    elemNodeCoords = np.zeros(8)
+    for i in range(8):
+
+        elemNodeCoords[i] = elem[5+i]
+    
+    dxdxi,  dydxi  = np.dot(dNdxiMatrix(xi, eta), elemNodeCoords)
+    dxdeta, dydeta = np.dot(dNdetaMatrix(xi, eta), elemNodeCoords)
+
+    J_mtx = np.array([[dxdxi, dydxi], [dxdeta, dydeta]])
+    
+
+    return  J_mtx
+
+# Jacobian determinant
+def detJ(elem, xi, eta):
+
+    return J(elem, xi, eta)[0][0] * J(elem, xi, eta)[1][1] - J(elem, xi, eta)[0][1] * J(elem, xi, eta)[1][0]
+
+# Inverted Jacobian matrix
+def invJ(elem, xi, eta):
+
+    invJ_mtx = np.zeros((2,2))
+
+    invJ_mtx[0][0] =  J(elem, xi, eta)[1][1]
+    invJ_mtx[0][1] = -J(elem, xi, eta)[0][1]
+    invJ_mtx[1][0] = -J(elem, xi, eta)[1][0]
+    invJ_mtx[1][1] =  J(elem, xi, eta)[0][0]
+
+    return 1./detJ(elem, xi, eta) * invJ_mtx
+
+
 # make the damn program as easy as possible, do not make rocket science off of it!
 # if the file returns some data, adjust the code to be able to read it! 
