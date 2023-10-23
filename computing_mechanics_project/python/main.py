@@ -39,3 +39,12 @@ for i in range(elemInputCount):
     elemData[i][10] = nodeTable[int(elemTable[i][3]) - 1][2]
     elemData[i][11] = nodeTable[int(elemTable[i][4]) - 1][1]
     elemData[i][12] = nodeTable[int(elemTable[i][4]) - 1][2]
+
+# Material matrix, ps - plain strain
+
+E_ps  = elemE/(1 - np.power(elemPR,2))
+PR_ps = elemPR/(1 - elemPR)
+
+elemD = E_ps/(1-np.power(PR_ps,2)) * np.array([[1, PR_ps, 0],[PR_ps, 1, 0],[0, 0, (1-PR_ps)/2]])
+
+

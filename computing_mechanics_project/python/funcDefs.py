@@ -146,6 +146,51 @@ def invJ(elem, xi, eta):
 
     return 1./detJ(elem, xi, eta) * invJ_mtx
 
+# Form functions derivatives from (x,y)
+def dNdxy(elem, xi, eta):
+
+    dNdxy_mtx = np.zeros((2,4))
+    
+    dN1dxieta = np.array([dN1dxi(xi, eta), dN1deta(xi, eta)])
+    dN2dxieta = np.array([dN2dxi(xi, eta), dN2deta(xi, eta)])
+    dN3dxieta = np.array([dN3dxi(xi, eta), dN3deta(xi, eta)])
+    dN4dxieta = np.array([dN4dxi(xi, eta), dN4deta(xi, eta)])
+    
+    dNdxy_mtx[0][0], dNdxy_mtx[1][0] = np.dot( invJ(elem, xi, eta), dN1dxieta)
+    dNdxy_mtx[0][1], dNdxy_mtx[1][1] = np.dot( invJ(elem, xi, eta), dN2dxieta)
+    dNdxy_mtx[0][2], dNdxy_mtx[1][2] = np.dot( invJ(elem, xi, eta), dN3dxieta)
+    dNdxy_mtx[0][3], dNdxy_mtx[1][3] = np.dot( invJ(elem, xi, eta), dN4dxieta)
+
+    return dNdxy_mtx
+
+# Strain form functions matrix [B]
+def elemB(elem, xi, eta):
+
+    B_mtx = np.zeros((3,8))
+
+    for i in range(4):
+        B_mtx[0][2*i]   = dNdxy(elem, xi, eta)[0][i]
+        B_mtx[2][2*i+1] = dNdxy(elem, xi, eta)[0][i]
+        B_mtx[1][2*i+1] = dNdxy(elem, xi, eta)[1][i]
+        B_mtx[2][2*i]   = dNdxy(elem, xi, eta)[1][i]
+        
+    return B_mtx
+    
+# Finite element stiffness matrix non-integrated
+def elemK(elem, elemD, xi, eta):
+
+    BD_mtx  = elemB(elem, xi, eta).transpose().dot(elemD)
+    BDB_mtx = BD_mtx.dot(elemB(elem, xi, eta))
+
+    return BDB_mtx
+
+# Finite element stiffness matrix
+def elemKMtx(elem, elemD):
+    
+    
+
+    return
+
 
 # make the damn program as easy as possible, do not make rocket science off of it!
 # if the file returns some data, adjust the code to be able to read it! 
