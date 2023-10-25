@@ -177,19 +177,27 @@ def elemB(elem, xi, eta):
     return B_mtx
     
 # Finite element stiffness matrix non-integrated
-def elemK(elem, elemD, xi, eta):
+def elemKMtx(elem, elemD, xi, eta):
 
-    BD_mtx  = elemB(elem, xi, eta).transpose().dot(elemD)
-    BDB_mtx = BD_mtx.dot(elemB(elem, xi, eta))
+    BD_mtx   = elemB(elem, xi, eta).transpose().dot(elemD)
+    BDB_mtx  = BD_mtx.dot(elemB(elem, xi, eta))
+    BDBJ_mtx = BDB_mtx * detJ(elem, xi, eta)
 
-    return BDB_mtx
+    return BDBJ_mtx
 
 # Finite element stiffness matrix
-def elemKMtx(elem, elemD):
+def elemK(elem, elemD):
     
-    
+    xiEtaQuad = np.array([1/np.sqrt(3), -1/np.sqrt(3)])
 
-    return
+    sumStiffness = 0
+
+    for i in range(2):
+        for j in range(2):
+
+            sumStiffness += elemKMtx(elem, elemD, xiEtaQuad[i], xiEtaQuad[j])
+
+    return sumStiffness
 
 
 # make the damn program as easy as possible, do not make rocket science off of it!
