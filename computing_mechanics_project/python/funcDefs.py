@@ -199,6 +199,52 @@ def elemK(elem, elemD):
 
     return sumStiffness
 
+# Ansamble stiffness matrix
+def systemK(elemData, elemD):
+
+    maxNode = 0
+
+    for i in range(1,5):
+        for j in range(elemData.shape[0]):
+            if (elemData[j][i] > maxNode):
+
+                maxNode = elemData[j][i]
+
+    systemKNum = int(maxNode)
+
+    K_mtx = np.zeros((2*systemKNum, 2*systemKNum))
+    
+    # Filling up top triangle of mtx
+    for elemI in range(elemData.shape[0]):
+
+        elemCurrent = elemData[elemI]
+
+        elemIK   = elemK(elemCurrent, elemD)
+        
+        elemNode = 0
+        
+        for globalNodeValue in elemCurrent[1:5]:
+            
+            globalNode = int(globalNodeValue) - 1
+
+            K_mtx[2*globalNode][2*globalNode]         += elemIK[2*elemNode][2*elemNode]
+            K_mtx[2*globalNode + 1][2*globalNode + 1] += elemIK[2*elemNode + 1][2*elemNode + 1]
+            K_mtx[2*globalNode][2*globalNode + 1] += elemIK[2*elemNode][2*elemNode + 1]
+            K_mtx[2*globalNode + 1][2*globalNode] += elemIK[2*elemNode + 1][2*elemNode]
+
+            elemNode += 1
+
+    # Symmetric refraction
+    for i in range(1, 2*systemKNum):
+        for j in range(i):
+
+            K_mtx[i][j] = K_mtx[j][i]
+
+
+    return K_mtx
+
+
+
 
 # make the damn program as easy as possible, do not make rocket science off of it!
 # if the file returns some data, adjust the code to be able to read it! 

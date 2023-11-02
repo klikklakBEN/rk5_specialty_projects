@@ -1,10 +1,9 @@
-import funcDefs as fd
+import funcDefs
 import numpy as np
 
 
 # node input file: 1st column - node number, 2nd-4th - x,y,z global coords
 nodeTable = np.loadtxt('nodeInput.txt')
-
 # elem input file: 1st column - elem number, 2nd-5th - 1st-4th nodes
 elemInputTable = np.loadtxt('elemInput.txt')
 elemInputCount = elemInputTable.shape[0]
