@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 #assuming there's a fucntion harvesting the node information from input txt/xls/spreadsheet file
 
@@ -200,17 +201,7 @@ def elemK(elem, elemD):
     return sumStiffness
 
 # Ansamble stiffness matrix
-def systemK(elemData, elemD):
-
-    maxNode = 0
-
-    for i in range(1,5):
-        for j in range(elemData.shape[0]):
-            if (elemData[j][i] > maxNode):
-
-                maxNode = elemData[j][i]
-
-    systemKNum = int(maxNode)
+def systemK(elemData, elemD, systemKNum):
 
     K_mtx = np.zeros((2*systemKNum, 2*systemKNum))
     
@@ -243,7 +234,32 @@ def systemK(elemData, elemD):
 
     return K_mtx
 
+# System load
+def systemP(loadData):
+    
+    xiEtaQuad = np.array([1/np.sqrt(3), -1/np.sqrt(3)])
 
+    sumLoad = np.zeros(np.transpose(loadData).shape[0])
+
+    for i in range(2):
+        for j in range(2):
+
+            sumLoad += np.dot(loadData, NMatrix(xiEtaQuad[i], xiEtaQuad[j]))
+
+    return sumLoad
+
+# Plotting node data
+def elemPlot(elemData, elemLineStyle, elemLineColor, elemAxis):
+    
+    elemNum = elemData.shape[0]
+    
+    for i in range(elemNum):
+        elemX = np.array([elemData[i][5], elemData[i][7],elemData[i][9],elemData[i][11], elemData[i][5]])
+        elemY = np.array([elemData[i][6], elemData[i][8],elemData[i][10],elemData[i][12], elemData[i][6]])
+        
+        elemAxis.plot(elemX, elemY, linestyle = elemLineStyle, color = elemLineColor)
+    
+    return elemAxis
 
 
 # make the damn program as easy as possible, do not make rocket science off of it!
