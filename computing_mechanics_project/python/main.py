@@ -10,8 +10,8 @@ elemInputCount = elemInputTable.shape[0]
 elemTable = np.zeros((elemInputCount, 5))
 
 matTable = np.loadtxt('matInput.txt')
-elemE    = matTable[0]
-elemPR   = matTable[1]
+elemE  = matTable[0]
+elemPR = matTable[1]
 
 for i in range(elemInputCount):
 

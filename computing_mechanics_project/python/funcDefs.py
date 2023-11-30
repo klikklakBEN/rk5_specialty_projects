@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 #assuming there's a fucntion harvesting the node information from input txt/xls/spreadsheet file
 
@@ -201,35 +200,35 @@ def elemK(elem, elemD):
     return sumStiffness
 
 # Ansamble stiffness matrix
-def systemK(elemData, elemD, systemKNum):
-
-    K_mtx = np.zeros((2*systemKNum, 2*systemKNum))
+def systemK(elem, elemD, systemKNum):
     
-    # Filling up top triangle of mtx
+    elemData = elem.copy();
+        
+    K_mtx = np.zeros((2*systemKNum, 2*systemKNum));
+    
     for elemI in range(elemData.shape[0]):
 
-        elemCurrent = elemData[elemI]
+            elemCurrent = elemData[elemI];
+            elemIK   = elemK(elemCurrent, elemD);
 
-        elemIK   = elemK(elemCurrent, elemD)
-        
-        elemNode = 0
-        
-        for globalNodeValue in elemCurrent[1:5]:
-            
-            globalNode = int(globalNodeValue) - 1
+            elemNodeRow    = 0;
+            for globalNodeRowValue in elemCurrent[1:5]:
 
-            K_mtx[2*globalNode][2*globalNode]         += elemIK[2*elemNode][2*elemNode]
-            K_mtx[2*globalNode + 1][2*globalNode + 1] += elemIK[2*elemNode + 1][2*elemNode + 1]
-            K_mtx[2*globalNode][2*globalNode + 1] += elemIK[2*elemNode][2*elemNode + 1]
-            K_mtx[2*globalNode + 1][2*globalNode] += elemIK[2*elemNode + 1][2*elemNode]
+                elemNodeColumn = 0;
+                for globalNodeColumnValue in elemCurrent[1:5]:
 
-            elemNode += 1
 
-    # Symmetric refraction
-    for i in range(1, 2*systemKNum):
-        for j in range(i):
+                    globalNodeRow    = int(globalNodeRowValue) - 1;
+                    globalNodeColumn = int(globalNodeColumnValue) - 1;
 
-            K_mtx[i][j] = K_mtx[j][i]
+                    K_mtx[2*globalNodeRow][2*globalNodeColumn]         += elemIK[2*elemNodeRow][2*elemNodeColumn];
+                    K_mtx[2*globalNodeRow + 1][2*globalNodeColumn + 1] += elemIK[2*elemNodeRow + 1][2*elemNodeColumn + 1];
+                    K_mtx[2*globalNodeRow][2*globalNodeColumn + 1] += elemIK[2*elemNodeRow][2*elemNodeColumn + 1];
+                    K_mtx[2*globalNodeRow + 1][2*globalNodeColumn] += elemIK[2*elemNodeRow + 1][2*elemNodeColumn];
+
+                    elemNodeColumn += 1;
+                elemNodeRow += 1;
+
 
 
     return K_mtx

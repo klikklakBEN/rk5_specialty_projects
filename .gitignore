@@ -8,4 +8,12 @@ practice_3term
 rotor_analysys/output
 torsion_analysis
 SMM_HW4
+computing_mechanics_project/python
+computing_mechanics_project/qt
+.gitignore.swp
+andyn_hw5/octave/octave-workspace
+andyn_hw5/octave/uNum.m
+computing_mechanics_project/qt/main_qt/.gitignore
+computing_mechanics_project/qt/main_qt/false_main.py
+computing_mechanics_project/qt/main_qt/main_qt.pyproject
 
